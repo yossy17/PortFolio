@@ -15,7 +15,7 @@ const TopSidebar = () => {
 
               <div className='top__sidebar__profile__card__icon'>
                 <Image
-                  src='/Imgs/Yossy.png'
+                  src='/Imgs/Yossy.webp'
                   alt='icon'
                   width={250}
                   height={250}

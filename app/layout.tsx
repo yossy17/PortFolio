@@ -7,13 +7,13 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 
 config.autoAddCss = false;
 
-export const notoSansJP = Noto_Sans_JP({
+const notoSansJP = Noto_Sans_JP({
   weight: ['400'],
   subsets: ['latin'],
   style: ['normal'],
 });
 
-export const montserrat = Montserrat({
+const montserrat = Montserrat({
   weight: ['400'],
   subsets: ['latin'],
   style: ['normal'],

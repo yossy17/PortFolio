@@ -37,6 +37,11 @@
           left: 8px;
           transition: all 0.3s;
         }
+        .top__sidebar__profile__card__icon {
+          & img {
+            transform: scale(1);
+          }
+        }
       }
 
       &__triangle {
@@ -127,7 +132,6 @@
       }
 
       &__media {
-        transition: all 0.3s ease;
         display: flex;
         align-items: center;
         text-align: left;
@@ -135,17 +139,24 @@
         background: #fff;
         padding: 8px 6px;
         border-radius: 2px;
+        overflow: hidden;
 
         @include hover {
           box-shadow:
             0 5px 10px -3px #0000004d,
             0 4px 6px -2px #00000026;
+          &::after,
+          & svg {
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+          }
         }
 
         &::after {
-          margin-left: 2px;
+          margin-left: 5px;
           color: $primaryfc;
           font-size: 12px;
+          transition: all 0.3s ease;
         }
 
         &:nth-child(1)::after {
@@ -164,6 +175,7 @@
           width: 16px;
           height: 16px;
           object-fit: cover;
+          transition: all 0.3s ease;
         }
       }
     }
