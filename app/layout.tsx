@@ -31,11 +31,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ja'>
-      <script
-        async
-        src='https:24px;ead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7672438019900336'
-        crossOrigin='anonymous'
-      ></script>
       <body className={notoSansJP.className}>
         <Base.Header />
         <main id='main'>{children}</main>
