@@ -1,0 +1,171 @@
+@use '../../var' as *;
+
+.top__sidebar {
+  grid-area: topSidebar;
+  margin-top: 100px;
+  margin-inline: auto;
+
+  &__profile {
+    border: 1px $gray solid;
+    padding: 10px 25px 25px;
+    background-color: $secondarybg;
+
+    &__card {
+      width: 250px;
+      height: auto;
+      margin-inline: auto;
+      margin-block: 20px;
+      padding: 30px 15px;
+      box-shadow:
+        0 10px 15px -3px #0000004d,
+        0 4px 6px -2px #00000026;
+      background-color: $primarybg;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 1s ease;
+      perspective: 1000px;
+
+      @include hover {
+        .top__sidebar__profile__card__status {
+          transform: rotateY(180deg);
+        }
+        .top__sidebar__profile__card__triangle {
+          border-top: 15px solid $primary;
+          bottom: 8px;
+          left: 8px;
+          transition: all 0.3s;
+        }
+      }
+
+      &__triangle {
+        display: block;
+        height: 0;
+        width: 0;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        border-left: 15px solid transparent;
+        border-top: 15px solid $gray;
+        transition: all 0.3s;
+      }
+
+      &__icon {
+        width: 75px;
+        height: 75px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        box-shadow: 0 3px 15px rgba($primaryfc, 0.1);
+        cursor: pointer;
+
+        & img {
+          width: 100%;
+          height: auto;
+          display: flex;
+          transition: all 0.5s ease-in-out;
+          transform: scale(0.8);
+        }
+      }
+
+      &__status {
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        width: 145px;
+        height: 100%;
+        text-align: center;
+
+        &__front {
+          backface-visibility: hidden;
+
+          &__name {
+            font-size: 24px;
+          }
+
+          &__state {
+            font-size: 12px;
+            margin-top: 5px;
+            color: $gray;
+
+            &__age {
+              color: $gray;
+            }
+
+            &__school {
+              color: $gray;
+              &::before {
+                content: ', ';
+              }
+            }
+          }
+        }
+
+        &__behind {
+          backface-visibility: hidden;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: rotateY(180deg) translateY(-50%);
+          &__description {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    &__link {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+
+      a {
+      }
+
+      &__media {
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        font-size: 14px;
+        background: #fff;
+        padding: 8px 6px;
+        border-radius: 2px;
+
+        @include hover {
+          box-shadow:
+            0 5px 10px -3px #0000004d,
+            0 4px 6px -2px #00000026;
+        }
+
+        &::after {
+          margin-left: 2px;
+          color: $primaryfc;
+          font-size: 12px;
+        }
+
+        &:nth-child(1)::after {
+          content: 'Twitter';
+        }
+
+        &:nth-child(2)::after {
+          content: 'GreasyFork';
+        }
+
+        &:nth-child(3)::after {
+          content: 'GitHub';
+        }
+
+        svg {
+          width: 16px;
+          height: 16px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}

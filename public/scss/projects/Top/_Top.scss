@@ -1,0 +1,10 @@
+@use './TopSidebar';
+
+.top {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template:
+    '... top topSidebar ...' auto
+    / 25px 1fr 500px 25px;
+}
