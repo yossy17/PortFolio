@@ -1,5 +1,7 @@
 //color
 $primary: #eec968;
+$secondary: #c29523;
+$tertiary: #ecdcb2;
 
 $primaryfc: #111;
 
@@ -10,6 +12,7 @@ $tertiarybg: #f2f2f2;
 // $primarylink: #???;
 
 $gray: #aaa;
+$gray-blue: #e2e8f0;
 
 body {
   background: $primarybg;
@@ -64,3 +67,19 @@ $breakpoints: (
     }
   }
 }
+
+// ----------------------------------------------------------------------------------------------------
+
+// font-size px to rem
+$baseFontSize: 16;
+@function rem($pixels) {
+  @return $pixels / $baseFontSize * 1rem;
+}
+
+// @mixin rem($size) {
+//   font-size: $size + px;
+//   font-size: ($size / 16) + rem;
+// }
+// li {
+//   @include rem(15);
+// }

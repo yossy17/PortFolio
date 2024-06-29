@@ -17,9 +17,12 @@ body {
   display: grid;
   grid-template:
     ' header '
+    ' ...... ' 15px
     '  main  ' 1fr
+    ' ...... ' 15px
     ' footer '
     / 100%;
+
   -ms-overflow-style: none;
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -35,14 +38,14 @@ a {
   text-decoration-line: none !important;
 }
 
-#header {
+.header {
   grid-area: header;
 }
 
-#main {
+.main {
   grid-area: main;
 }
 
-#footer {
+.footer {
   grid-area: footer;
 }

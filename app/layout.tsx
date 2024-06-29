@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import * as Base from '@/components/Base/Index';
-import { Noto_Sans_JP, Montserrat, Bubblegum_Sans } from 'next/font/google';
+import { Noto_Sans_JP } from 'next/font/google';
 import '@/public/Styles/app.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -8,12 +8,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 
 const notoSansJP = Noto_Sans_JP({
-  weight: ['400'],
-  subsets: ['latin'],
-  style: ['normal'],
-});
-
-const montserrat = Montserrat({
   weight: ['400'],
   subsets: ['latin'],
   style: ['normal'],
@@ -33,7 +27,7 @@ export default function RootLayout({
     <html lang='ja'>
       <body className={notoSansJP.className}>
         <Base.Header />
-        <main id='main'>{children}</main>
+        <main className='main'>{children}</main>
         {/* <layouts.Footer /> */}
       </body>
     </html>

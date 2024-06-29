@@ -1,40 +1,40 @@
-@use '../../var' as *;
+@use '../../../var' as *;
 
 .top__sidebar {
   grid-area: topSidebar;
-  margin-top: 100px;
   margin-inline: auto;
 
   &__profile {
-    border: 1px $gray solid;
-    padding: 10px 25px 25px;
+    margin: rem(25);
+    border: rem(1) $gray-blue solid;
+    padding: rem(10) rem(25) rem(25);
     background-color: $secondarybg;
 
     &__card {
-      width: 250px;
+      width: rem(250);
       height: auto;
       margin-inline: auto;
-      margin-block: 20px;
-      padding: 30px 15px;
+      margin-block: rem(20);
+      padding: rem(30) rem(15);
       box-shadow:
-        0 10px 15px -3px #0000004d,
-        0 4px 6px -2px #00000026;
+        0 rem(10) rem(15) -rem(3) #0000004d,
+        0 rem(4) rem(6) -rem(2) #00000026;
       background-color: $primarybg;
-      border-radius: 20px;
+      border-radius: rem(20);
       position: relative;
       overflow: hidden;
       cursor: pointer;
       transition: all 1s ease;
-      perspective: 1000px;
+      perspective: rem(1000);
 
       @include hover {
         .top__sidebar__profile__card__status {
           transform: rotateY(180deg);
         }
         .top__sidebar__profile__card__triangle {
-          border-top: 15px solid $primary;
-          bottom: 8px;
-          left: 8px;
+          border-top: rem(15) solid $primary;
+          bottom: rem(8);
+          left: rem(8);
           transition: all 0.3s;
         }
         .top__sidebar__profile__card__icon {
@@ -49,24 +49,24 @@
         height: 0;
         width: 0;
         position: absolute;
-        bottom: 5px;
-        left: 5px;
-        border-left: 15px solid transparent;
-        border-top: 15px solid $gray;
+        bottom: rem(5);
+        left: rem(5);
+        border-left: rem(15) solid transparent;
+        border-top: rem(15) solid $gray;
         transition: all 0.3s;
       }
 
       &__icon {
-        width: 75px;
-        height: 75px;
+        width: rem(75);
+        height: rem(75);
         overflow: hidden;
         border-radius: 50%;
         margin: 0 auto;
         position: absolute;
         top: 50%;
-        right: 15px;
+        right: rem(15);
         transform: translateY(-50%);
-        box-shadow: 0 3px 15px rgba($primaryfc, 0.1);
+        box-shadow: 0 rem(3) rem(15) rgba($primaryfc, 0.1);
         cursor: pointer;
 
         & img {
@@ -81,7 +81,7 @@
       &__status {
         transition: transform 0.6s;
         transform-style: preserve-3d;
-        width: 145px;
+        width: rem(145);
         height: 100%;
         text-align: center;
 
@@ -89,12 +89,20 @@
           backface-visibility: hidden;
 
           &__name {
-            font-size: 24px;
+            font-size: rem(24);
+
+            &--change {
+              letter-spacing: rem(-9);
+            }
+
+            &--last {
+              margin-left: rem(9);
+            }
           }
 
           &__state {
-            font-size: 12px;
-            margin-top: 5px;
+            font-size: rem(12);
+            margin-top: rem(5);
             color: $gray;
 
             &__age {
@@ -110,14 +118,14 @@
           }
         }
 
-        &__behind {
+        &__back {
           backface-visibility: hidden;
           position: absolute;
           top: 50%;
           left: 0;
           transform: rotateY(180deg) translateY(-50%);
           &__description {
-            font-size: 12px;
+            font-size: rem(12);
           }
         }
       }
@@ -126,7 +134,7 @@
     &__link {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: rem(8);
 
       a {
       }
@@ -135,27 +143,27 @@
         display: flex;
         align-items: center;
         text-align: left;
-        font-size: 14px;
+        font-size: rem(14);
         background: #fff;
-        padding: 8px 6px;
-        border-radius: 2px;
+        padding: rem(8) rem(6);
+        border-radius: rem(2);
         overflow: hidden;
+        transition: all 0.3s ease-in-out;
 
         @include hover {
           box-shadow:
-            0 5px 10px -3px #0000004d,
-            0 4px 6px -2px #00000026;
-          &::after,
+            0 rem(5) rem(10) -rem(3) #0000004d,
+            0 rem(4) rem(6) -rem(2) #00000026;
+
           & svg {
-            transform: scale(1.05);
-            transition: all 0.3s ease;
+            transform: scale(1.2);
           }
         }
 
         &::after {
-          margin-left: 5px;
+          margin-left: rem(5);
           color: $primaryfc;
-          font-size: 12px;
+          font-size: rem(12);
           transition: all 0.3s ease;
         }
 
@@ -172,8 +180,8 @@
         }
 
         svg {
-          width: 16px;
-          height: 16px;
+          width: rem(16);
+          height: rem(16);
           object-fit: cover;
           transition: all 0.3s ease;
         }
