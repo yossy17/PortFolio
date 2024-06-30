@@ -2,9 +2,7 @@
 
 .header {
   width: 100%;
-  // position: fixed !important;
-  // top: 0;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 10;
   background: #fff;
@@ -12,6 +10,11 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  transition: transform 0.3s ease-in-out;
+
+  &--hidden {
+    transform: translateY(-100%);
+  }
 
   &__main {
     margin-inline: rem(10);
@@ -114,5 +117,3 @@
     }
   }
 }
-
-// -------------------------

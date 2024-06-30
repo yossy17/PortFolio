@@ -17,9 +17,18 @@ body {
   display: grid;
   grid-template:
     ' header '
+    ' ...... ' rem(150)
     '  main  ' 1fr
     ' footer '
     / 100%;
+  @include mq(md) {
+    grid-template:
+      ' header '
+      ' ...... ' rem(100)
+      '  main  ' 1fr
+      ' footer '
+      / 100%;
+  }
 
   -ms-overflow-style: none;
   scrollbar-width: none;
