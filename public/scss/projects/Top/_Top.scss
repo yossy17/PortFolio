@@ -7,13 +7,13 @@
   display: grid;
 
   grid-template:
-    ' ... topSidebar ... ' auto
-    ' ... main ... ' auto
-    / 1.5rem auto 1.5rem;
+    '  topSidebar  ' auto
+    '     main     ' auto
+    / auto;
 
   @include mq(md) {
     grid-template:
-      ' ... topSidebar main ... ' auto
-      / 1.5rem auto 1fr 1.5rem;
+      '  topSidebar main  ' auto
+      / auto 1fr;
   }
 }

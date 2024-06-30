@@ -9,6 +9,10 @@
     border: rem(1) $gray-blue solid;
     padding: rem(10) rem(25) rem(25);
     background-color: $secondarybg;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
     &__card {
       width: rem(250);

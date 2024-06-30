@@ -1,17 +1,21 @@
 @use '../../var' as *;
 
 .header {
-  padding: rem(10) 0;
+  padding: rem(10);
   max-width: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
   &__main {
     display: flex;
     align-items: center;
-
+    position: relative;
     &__icon {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: left;
       margin: 0 rem(10);
 
       &__name {
@@ -29,24 +33,17 @@
 
     &__search {
       margin-inline: auto;
+      width: 100%;
+      max-width: rem(650);
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: left;
       border: rem(1) $gray-blue solid;
       border-radius: rem(10);
       height: rem(40);
 
       &__input {
-        width: rem(650);
-        padding: 10px;
-      }
-
-      &__button {
-        color: $secondary;
-        background: $tertiary;
-        width: rem(48);
-        height: rem(40);
-        border-radius: 0 10px 10px 0;
+        padding: rem(10);
       }
     }
   }

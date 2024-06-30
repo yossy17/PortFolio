@@ -22,13 +22,10 @@ const HeaderMain = () => {
           <span className='header__main__icon__name--last'>y</span>
         </h1>
       </Link>
-
       <div className='header__main__search'>
         <form>
           <input className='header__main__search__input' placeholder='Search' />
-          <button className='header__main__search__button' type='submit'>
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
+          {/* <button className='header__main__search__button' type='button'></button> */}
         </form>
       </div>
     </div>
