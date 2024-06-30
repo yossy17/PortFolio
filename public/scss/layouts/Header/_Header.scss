@@ -15,18 +15,17 @@
     grid-template:
       '  icon   '
       '  .....  ' rem(24)
-      '  input  '
+      '  search  '
       / auto;
 
     @include mq(md) {
       grid-template:
-        '  icon ... input  ' rem(40)
-        / auto rem(8) 1fr;
+        '  icon search  ' rem(40)
+        / auto 1fr;
     }
 
     &__icon {
       grid-area: icon;
-      margin: 0 rem(10);
 
       &__name {
         font-size: rem(32);
@@ -42,16 +41,56 @@
     }
 
     &__search {
-      grid-area: input;
+      grid-area: search;
       margin-inline: auto;
-      padding-inline: rem(16);
-      border: rem(1) $gray-blue solid;
-      border-radius: rem(10);
-      height: rem(40);
-      width: 80%;
+      border-radius: rem(15);
+      font-size: rem(14);
 
-      @include mq(md) {
-        width: rem(400);
+      @include mq(lg) {
+      }
+
+      &__form {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        &__input {
+          display: flex;
+          padding-inline: rem(32) rem(12);
+          padding-block: 0;
+          border: rem(1) $gray-blue solid;
+          border-right: transparent;
+          border-radius: rem(15) 0 0 rem(15);
+          width: rem(200);
+          height: rem(40);
+
+          @include mq(md) {
+            width: rem(400);
+          }
+
+          @include mq(lg) {
+            width: rem(600);
+          }
+        }
+
+        &__button {
+          background: $tertiary;
+          line-height: rem(20);
+          padding: rem(8) rem(16);
+          justify-content: center;
+          align-items: center;
+          height: rem(40);
+          display: inline-flex;
+          border-radius: 0 rem(15) rem(15) 0;
+          text-transform: none;
+          border: rem(1) $gray-blue solid;
+
+          &__icon {
+            width: rem(16);
+            height: rem(16);
+            display: block;
+          }
+        }
       }
     }
   }
@@ -68,3 +107,5 @@
     }
   }
 }
+
+// -------------------------
