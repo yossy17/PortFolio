@@ -74,6 +74,7 @@ const TopSidebar = () => {
             <Link
               href='https://twitter.com/yos_sy17'
               about='_blank'
+              rel='noopener'
               className='top__sidebar__profile__link__media'
             >
               <FontAwesomeIcon icon={faSquareXTwitter} />
@@ -82,6 +83,7 @@ const TopSidebar = () => {
             <Link
               href='https://greasyfork.org/ja/users/1319247-yos-sy'
               about='_blank'
+              rel='noopener'
               className='top__sidebar__profile__link__media'
             >
               <svg
@@ -100,6 +102,7 @@ const TopSidebar = () => {
             <Link
               href='https://github.com/yossy17'
               about='_blank'
+              rel='noopener'
               className='top__sidebar__profile__link__media'
             >
               <FontAwesomeIcon icon={faGithub} />
