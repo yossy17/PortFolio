@@ -17,8 +17,8 @@ const TopSidebar = () => {
       <div className='top__sidebar'>
         <div className='top__sidebar__profile'>
           {/* カード */}
-          <div className='top__sidebar__profile__card'>
-            <Link href='/about'>
+          <Link href='/about'>
+            <div className='top__sidebar__profile__card'>
               <span className='top__sidebar__profile__card__triangle'></span>
 
               <div className='top__sidebar__profile__card__icon'>
@@ -65,8 +65,8 @@ const TopSidebar = () => {
                   </div>
                 </div>
               </div>
-            </Link>
-          </div>
+            </div>
+          </Link>
 
           {/* リンク */}
           <div className='top__sidebar__profile__link'>
