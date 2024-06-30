@@ -62,7 +62,7 @@
           border-right: transparent;
           border-radius: rem(15) 0 0 rem(15);
           width: rem(200);
-          height: rem(40);
+          height: rem(38);
 
           @include mq(md) {
             width: rem(400);
@@ -74,6 +74,7 @@
         }
 
         &__button {
+          color: $secondary;
           background: $tertiary;
           line-height: rem(20);
           padding: rem(8) rem(16);
