@@ -4,7 +4,7 @@
 
 html,
 body {
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 a {
@@ -17,9 +17,7 @@ body {
   display: grid;
   grid-template:
     ' header '
-    ' ...... ' 15px
     '  main  ' 1fr
-    ' ...... ' 15px
     ' footer '
     / 100%;
 

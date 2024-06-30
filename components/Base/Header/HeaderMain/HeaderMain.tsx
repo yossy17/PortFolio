@@ -21,11 +21,12 @@ const HeaderMain = () => {
           <span className='header__main__icon__name--last'>y</span>
         </h1>
       </Link>
-      <div className='header__main__search'>
+      {/* <div className='header__main__search'>
         <form>
           <input className='header__main__search__input' placeholder='Search' />
         </form>
-      </div>
+      </div> */}
+      <input type='text' placeholder='Search' className='header__main__search'></input>
     </div>
   );
 };

@@ -1,24 +1,31 @@
 @use '../../var' as *;
 
 .header {
-  max-width: 100%;
+  width: 100%;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 
   &__main {
-    padding: rem(10);
+    margin-inline: rem(10);
+    padding-block: rem(15);
     display: grid;
+    place-items: center;
     grid-template:
-      '  icon ... input  ' rem(40)
-      / auto rem(8) 1fr;
+      '  icon   '
+      '  .....  ' rem(24)
+      '  input  '
+      / auto;
+
+    @include mq(md) {
+      grid-template:
+        '  icon ... input  ' rem(40)
+        / auto rem(8) 1fr;
+    }
 
     &__icon {
       grid-area: icon;
-      display: flex;
-      align-items: center;
-      justify-content: left;
       margin: 0 rem(10);
 
       &__name {
@@ -37,16 +44,14 @@
     &__search {
       grid-area: input;
       margin-inline: auto;
-      width: 100%;
-      max-width: rem(650);
-      display: flex;
-      align-items: center;
+      padding-inline: rem(16);
       border: rem(1) $gray-blue solid;
       border-radius: rem(10);
       height: rem(40);
+      width: 80%;
 
-      &__input {
-        padding: rem(10);
+      @include mq(md) {
+        width: rem(400);
       }
     }
   }
