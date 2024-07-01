@@ -5,7 +5,7 @@
   position: fixed;
   top: 0;
   z-index: 10;
-  background: #fff;
+  background: $primarybg;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -72,6 +72,7 @@
           border-radius: rem(15) 0 0 rem(15);
           width: rem(200);
           height: rem(38);
+          background: $primarybg;
 
           @include mq(md) {
             width: rem(400);
