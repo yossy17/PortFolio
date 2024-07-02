@@ -1,10 +1,11 @@
+// C:\Users\hiito\Documents\.VSCode-pj\portfolio\app\articles\[slug]\page.tsx
 import { Inconsolata } from 'next/font/google';
 import { getArticleDetail, getArticleList } from '@/libs/microcms';
 import { generateSlug } from '@/libs/wanakana';
 import { notFound } from 'next/navigation';
-import cheerio from 'cheerio';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-dark.min.css';
+// import cheerio from 'cheerio';
+// import hljs from 'highlight.js';
+// import 'highlight.js/styles/atom-one-dark.min.css';
 
 const inconsolata = Inconsolata({
   weight: ['400'],
@@ -49,26 +50,26 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     return <div>記事の内容を読み込めませんでした。</div>;
   }
 
-  try {
-    // シンタックスハイライトの適用
-    const $ = cheerio.load(fullArticle.content);
-    $('div[data-filename]').each((_, element) => {
-      const filename = $(element).attr('data-filename');
-      $(element).prepend(`<p>${filename}</p>`);
-      $(element).addClass('Hoge'); // className を追加
-      $(element).addClass(inconsolata.className);
-    });
-    $('pre code').each((_, element) => {
-      const code = $(element).text();
-      const highlightedCode = hljs.highlightAuto(code).value;
-      $(element).html(highlightedCode);
-      $(element).addClass('hljs');
-      $(element).addClass(inconsolata.className);
-    });
-    fullArticle.content = $.html();
-  } catch (error) {
-    console.error('Error processing article content:', error);
-  }
+  // try {
+  //   // シンタックスハイライトの適用
+  //   const $ = cheerio.load(fullArticle.content);
+  //   $('div[data-filename]').each((_, element) => {
+  //     const filename = $(element).attr('data-filename');
+  //     $(element).prepend(`<p>${filename}</p>`);
+  //     $(element).addClass('Hoge'); // className を追加
+  //     $(element).addClass(inconsolata.className);
+  //   });
+  //   $('pre code').each((_, element) => {
+  //     const code = $(element).text();
+  //     const highlightedCode = hljs.highlightAuto(code).value;
+  //     $(element).html(highlightedCode);
+  //     $(element).addClass('hljs');
+  //     $(element).addClass(inconsolata.className);
+  //   });
+  //   fullArticle.content = $.html();
+  // } catch (error) {
+  //   console.error('Error processing article content:', error);
+  // }
 
   return (
     <article>
