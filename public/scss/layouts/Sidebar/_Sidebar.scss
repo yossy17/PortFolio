@@ -1,7 +1,6 @@
-@use '../../../var' as *;
+@use '../../var' as *;
 
-.top__sidebar {
-  grid-area: topSidebar;
+.sidebar {
   margin-inline: auto;
 
   &__profile {
@@ -13,6 +12,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    position: sticky;
+    top: 80px;
 
     &__card {
       width: rem(250);
@@ -32,17 +33,17 @@
       perspective: rem(1000);
 
       @include hover {
-        .top__sidebar__profile__card__status {
+        .sidebar__profile__card__status {
           transform: rotateY(180deg);
         }
-        .top__sidebar__profile__card__triangle {
+        .sidebar__profile__card__triangle {
           animation: none;
           border-top: rem(15) solid $primary;
           bottom: rem(8);
           left: rem(8);
           transition: all 0.3s;
         }
-        .top__sidebar__profile__card__icon {
+        .sidebar__profile__card__icon {
           & img {
             transform: scale(1);
           }

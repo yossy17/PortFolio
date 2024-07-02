@@ -18,18 +18,20 @@ body {
   height: 100vh;
   display: grid;
   grid-template:
-    ' header '
-    ' ...... ' rem(150)
-    '  main  ' 1fr
-    ' footer '
+    '  header '
+    '  ...... ' rem(150)
+    ' sidebar '
+    '   main  ' 1fr
+    '  footer '
     / 100%;
+
   @include mq(md) {
     grid-template:
-      ' header '
-      ' ...... ' rem(100)
-      '  main  ' 1fr
-      ' footer '
-      / 100%;
+      ' header header '
+      ' ...... ...... ' rem(100)
+      ' sidebar main  ' 1fr
+      ' footer footer '
+      / auto 1fr;
   }
 
   -ms-overflow-style: none;
@@ -49,6 +51,10 @@ a {
 
 .main {
   grid-area: main;
+}
+
+.sidebar {
+  grid-area: sidebar;
 }
 
 .footer {

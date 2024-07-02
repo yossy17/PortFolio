@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
-    "build": "next build",
-    "start": "next start",
+    "dev": "rm -rf .next/cache/fetch-cache && next dev --turbo",
+    "build": "rm -rf .next/cache/fetch-cache && next build",
+    "start": "rm -rf .next/cache/fetch-cache && next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -19,7 +19,8 @@
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
-    "swiper": "^11.1.4"
+    "swiper": "^11.1.4",
+    "wanakana": "^5.3.1"
   },
   "devDependencies": {
     "@types/node": "^20",

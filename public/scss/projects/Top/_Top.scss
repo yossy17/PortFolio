@@ -1,21 +1,8 @@
-@use './TopSidebar/TopSidebar';
 @use '../../var' as *;
 
 .top {
   width: 100%;
-  height: 100vh;
   display: grid;
-
-  grid-template:
-    '  topSidebar  ' auto
-    '     main     ' auto
-    / auto;
-
-  @include mq(md) {
-    grid-template:
-      '  topSidebar main  ' auto
-      / auto 1fr;
-  }
 }
 
 @keyframes infinity-scroll-left {

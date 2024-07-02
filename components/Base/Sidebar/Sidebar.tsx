@@ -14,14 +14,14 @@ const poppins = Poppins({
 const TopSidebar = () => {
   return (
     <>
-      <div className='top__sidebar'>
-        <div className='top__sidebar__profile'>
+      <div className='sidebar'>
+        <div className='sidebar__profile'>
           {/* カード */}
           <Link href='/about'>
-            <div className='top__sidebar__profile__card'>
-              <span className='top__sidebar__profile__card__triangle'></span>
+            <div className='sidebar__profile__card'>
+              <span className='sidebar__profile__card__triangle'></span>
 
-              <div className='top__sidebar__profile__card__icon'>
+              <div className='sidebar__profile__card__icon'>
                 <Image
                   src='/Imgs/Yossy.webp'
                   alt='icon'
@@ -31,34 +31,26 @@ const TopSidebar = () => {
                 ></Image>
               </div>
               {/* ステータス */}
-              <div className='top__sidebar__profile__card__status'>
+              <div className='sidebar__profile__card__status'>
                 {/* 表 */}
-                <div className='top__sidebar__profile__card__status__front'>
+                <div className='sidebar__profile__card__status__front'>
                   <h2
-                    className={`top__sidebar__profile__card__status__front__name ${poppins.className}`}
+                    className={`sidebar__profile__card__status__front__name ${poppins.className}`}
                   >
-                    <span className='top__sidebar__profile__card__status__front__name--normal'>
-                      Yo
-                    </span>
-                    <span className='top__sidebar__profile__card__status__front__name--change'>
-                      s_s
-                    </span>
-                    <span className='top__sidebar__profile__card__status__front__name--last'>
-                      y
-                    </span>
+                    <span className='sidebar__profile__card__status__front__name--normal'>Yo</span>
+                    <span className='sidebar__profile__card__status__front__name--change'>s_s</span>
+                    <span className='sidebar__profile__card__status__front__name--last'>y</span>
                   </h2>
-                  <p className='top__sidebar__profile__card__status__front__state'>
-                    <span className='top__sidebar__profile__card__status__front__state__age'>
-                      14y/o
-                    </span>
-                    <span className='top__sidebar__profile__card__status__front__state__school'>
+                  <p className='sidebar__profile__card__status__front__state'>
+                    <span className='sidebar__profile__card__status__front__state__age'>14y/o</span>
+                    <span className='sidebar__profile__card__status__front__state__school'>
                       JHS
                     </span>
                   </p>
                 </div>
                 {/* 裏 */}
-                <div className='top__sidebar__profile__card__status__back'>
-                  <div className='top__sidebar__profile__card__status__back__description'>
+                <div className='sidebar__profile__card__status__back'>
+                  <div className='sidebar__profile__card__status__back__description'>
                     {' '}
                     中学生エンジニア <br />
                     WebフロントエンドとC#,C++勉強中
@@ -69,13 +61,13 @@ const TopSidebar = () => {
           </Link>
 
           {/* リンク */}
-          <div className='top__sidebar__profile__link'>
+          <div className='sidebar__profile__link'>
             {/* ツイッター */}
             <Link
               href='https://twitter.com/yos_sy17'
               target='_blank'
               rel='noopener'
-              className='top__sidebar__profile__link__media'
+              className='sidebar__profile__link__media'
             >
               <FontAwesomeIcon icon={faSquareXTwitter} />
             </Link>
@@ -84,7 +76,7 @@ const TopSidebar = () => {
               href='https://greasyfork.org/ja/users/1319247-yos-sy'
               target='_blank'
               rel='noopener'
-              className='top__sidebar__profile__link__media'
+              className='sidebar__profile__link__media'
             >
               <svg
                 aria-hidden='true'
@@ -103,7 +95,7 @@ const TopSidebar = () => {
               href='https://github.com/yossy17'
               target='_blank'
               rel='noopener'
-              className='top__sidebar__profile__link__media'
+              className='sidebar__profile__link__media'
             >
               <FontAwesomeIcon icon={faGithub} />
             </Link>

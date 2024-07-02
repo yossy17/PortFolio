@@ -27,6 +27,7 @@ export default function RootLayout({
     <html lang='ja'>
       <body className={notoSansJP.className}>
         <Base.Header />
+        <Base.Sidebar />
         <main className='main'>{children}</main>
         {/* <layouts.Footer /> */}
       </body>
