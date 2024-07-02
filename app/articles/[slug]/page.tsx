@@ -3,9 +3,9 @@ import { getArticleDetail, getArticleList } from '@/libs/microcms';
 import { generateSlug } from '@/libs/wanakana';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import cheerio from 'cheerio';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-dark.min.css';
+// import cheerio from 'cheerio';
+// import hljs from 'highlight.js';
+// import 'highlight.js/styles/atom-one-dark.min.css';
 
 const inconsolata = Inconsolata({
   weight: ['400'],
@@ -50,8 +50,6 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     return <div>記事の内容を読み込めませんでした。</div>;
   }
 
-  let contentWithHighlight = fullArticle.content;
-
   // try {
   //   // シンタックスハイライトの適用
   //   const $ = cheerio.load(fullArticle.content);
@@ -68,7 +66,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
   //     $(element).addClass('hljs');
   //     $(element).addClass(inconsolata.className);
   //   });
-  //   contentWithHighlight = $.html();
+  //   fullArticle.content = $.html();
   // } catch (error) {
   //   console.error('Error processing article content:', error);
   // }
@@ -79,7 +77,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       <p>カテゴリー: {fullArticle.categories.join(', ')}</p>
       <p>作成日: {new Date(fullArticle.createdAt).toLocaleDateString()}</p>
       <p>更新日: {new Date(fullArticle.updatedAt).toLocaleDateString()}</p>
-      <div dangerouslySetInnerHTML={{ __html: contentWithHighlight }} />
+      <div dangerouslySetInnerHTML={{ __html: fullArticle.content }} />
       {/*
         {fullArticle.thumbnail && (
           <Image
