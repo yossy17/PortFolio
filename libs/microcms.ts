@@ -3,10 +3,14 @@ import { createClient, MicroCMSQueries, MicroCMSImage, MicroCMSDate } from 'micr
 export type Article = {
   id: string;
   title: string;
-  // titleId: string;
   content: string;
-  categories: string[];
+  categories: Category[];
   thumbnail?: MicroCMSImage;
+} & MicroCMSDate;
+
+export type Category = {
+  id: string;
+  categories: string;
 } & MicroCMSDate;
 
 type ClientType = ReturnType<typeof createClient>;
@@ -52,24 +56,20 @@ export const getArticleDetail = async (contentId: string, queries?: MicroCMSQuer
   return data;
 };
 
-export const getCategoryList = async () => {
-  const data = await getClient().getList<Article>({
-    endpoint: 'article',
-    queries: { fields: 'categories' },
+export const getCategoryList = async (queries?: MicroCMSQueries) => {
+  const data = await getClient().getList<Category>({
+    endpoint: 'categories',
+    queries,
   });
-  const allCategories: string[] = data.contents.flatMap((article) => article.categories);
-  const uniqueCategories = allCategories.filter(
-    (category, index, self) => self.indexOf(category) === index
-  );
-  return { contents: uniqueCategories.map((category) => ({ id: category, name: category })) };
+  return data;
 };
 
-export const getArticlesByCategory = async (categoryId: string, queries?: MicroCMSQueries) => {
+export const getArticlesByCategory = async (categoryName: string, queries?: MicroCMSQueries) => {
   const data = await getClient().getList<Article>({
     endpoint: 'article',
     queries: {
       ...queries,
-      filters: `categories[contains]${categoryId}`,
+      filters: `categories[contains]${categoryName}[or]categories[contains]${categoryName.toLowerCase()}[or]categories[contains]${categoryName.toUpperCase()}`,
     },
   });
   return data;

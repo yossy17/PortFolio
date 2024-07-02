@@ -1,0 +1,61 @@
+<div data-filename="react">
+  <pre><code class="hljs inconsolata_e04cd53c-module__BtUK1q__className"><span class="hljs-keyword">import</span> { getArticleDetail, getArticleList } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/libs/microcms'</span>;
+  <span class="hljs-keyword">import</span> { generateSlug } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/libs/utils'</span>;
+  <span class="hljs-keyword">import</span> { notFound } <span class="hljs-keyword">from</span> <span class="hljs-string">'next/navigation'</span>;
+  <span class="hljs-keyword">import</span> <span class="hljs-title class_">Image</span> <span class="hljs-keyword">from</span> <span class="hljs-string">'next/image'</span>;
+  <span class="hljs-keyword">import</span> cheerio <span class="hljs-keyword">from</span> <span class="hljs-string">'cheerio'</span>;
+  <span class="hljs-keyword">import</span> hljs <span class="hljs-keyword">from</span> <span class="hljs-string">'highlight.js'</span>;
+  <span class="hljs-keyword">import</span> <span class="hljs-string">'highlight.js/styles/github-dark-dimmed.min.css'</span>;
+
+  <span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">generateStaticParams</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">const</span> { <span class="hljs-attr">contents</span>: articles } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getArticleList</span>({ <span class="hljs-attr">fields</span>: [<span class="hljs-string">'title'</span>] });
+
+    <span class="hljs-keyword">return</span> articles.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">article</span>) =&gt;</span> ({
+      <span class="hljs-attr">slug</span>: <span class="hljs-title function_">generateSlug</span>(article.<span class="hljs-property">title</span>),
+    }));
+  }
+
+  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">ArticlePage</span>(<span class="hljs-params">{ params }: { params: { slug: string } }</span>) {
+    <span class="hljs-keyword">const</span> { <span class="hljs-attr">contents</span>: articles } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getArticleList</span>();
+    <span class="hljs-keyword">const</span> article = articles.<span class="hljs-title function_">find</span>(<span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> <span class="hljs-title function_">generateSlug</span>(a.<span class="hljs-property">title</span>) === params.<span class="hljs-property">slug</span>);
+
+    <span class="hljs-keyword">if</span> (!article) {
+      <span class="hljs-title function_">notFound</span>();
+    }
+
+    <span class="hljs-keyword">const</span> fullArticle = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getArticleDetail</span>(article.<span class="hljs-property">id</span>);
+
+    <span class="hljs-keyword">if</span> (!fullArticle) {
+      <span class="hljs-title function_">notFound</span>();
+    }
+
+    <span class="hljs-comment">// Apply syntax highlighting</span>
+    <span class="hljs-keyword">const</span> $ = cheerio.<span class="hljs-title function_">load</span>(fullArticle.<span class="hljs-property">content</span>);
+    $(<span class="hljs-string">'pre code'</span>).<span class="hljs-title function_">each</span>(<span class="hljs-function">(<span class="hljs-params">_, element</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> code = $(element).<span class="hljs-title function_">text</span>();
+      <span class="hljs-keyword">const</span> highlightedCode = hljs.<span class="hljs-title function_">highlightAuto</span>(code).<span class="hljs-property">value</span>;
+      $(element).<span class="hljs-title function_">html</span>(highlightedCode);
+      $(element).<span class="hljs-title function_">addClass</span>(<span class="hljs-string">'hljs'</span>);
+    });
+
+    <span class="hljs-keyword">const</span> contentWithHighlight = $.<span class="hljs-title function_">html</span>();
+
+    <span class="hljs-keyword">return</span> (
+      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">article</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{fullArticle.title}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">dangerouslySetInnerHTML</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">__html:</span> <span class="hljs-attr">contentWithHighlight</span> }} /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>カテゴリー: {fullArticle.categories.join(', ')}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>作成日: {new Date(fullArticle.createdAt).toLocaleDateString()}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>更新日: {new Date(fullArticle.updatedAt).toLocaleDateString()}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        {fullArticle.thumbnail &amp;&amp; (
+          <span class="hljs-tag">&lt;<span class="hljs-name">Image</span>
+            <span class="hljs-attr">src</span>=<span class="hljs-string">{fullArticle.thumbnail.url}</span>
+            <span class="hljs-attr">alt</span>=<span class="hljs-string">{fullArticle.title}</span>
+            <span class="hljs-attr">width</span>=<span class="hljs-string">{fullArticle.thumbnail.width}</span>
+            <span class="hljs-attr">height</span>=<span class="hljs-string">{fullArticle.thumbnail.height}</span>
+          /&gt;</span>
+        )}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">article</span>&gt;</span></span>
+    );
+  }</code></pre>
+</div>

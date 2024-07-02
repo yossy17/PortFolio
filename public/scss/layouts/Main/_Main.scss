@@ -1,5 +1,40 @@
 @use '../../var' as *;
 
-.Lorem {
+.main {
   margin-inline: rem(20);
+}
+
+.Hoge {
+  max-width: rem(700);
+  margin-block: rem(20);
+  background: #282c34;
+
+  p {
+    background: $tertiarybg;
+    padding: rem(8);
+    display: inline-block;
+    border-radius: 0 0 rem(10);
+  }
+
+  pre {
+    code {
+      overflow: hidden;
+
+      &::-webkit-scrollbar {
+        background: #282c34;
+        width: auto;
+        height: rem(10);
+        border-radius: 0;
+      }
+
+      .scroll_bar::-webkit-scrollbar-track {
+        background-color: #ccc;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $gray;
+        border-radius: rem(10);
+      }
+    }
+  }
 }
