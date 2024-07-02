@@ -65,12 +65,14 @@ export const getCategoryList = async (queries?: MicroCMSQueries) => {
 };
 
 export const getArticlesByCategory = async (categoryName: string, queries?: MicroCMSQueries) => {
+  console.log('Fetching articles for category:', categoryName);
   const data = await getClient().getList<Article>({
     endpoint: 'article',
     queries: {
       ...queries,
-      filters: `categories[contains]${categoryName}[or]categories[contains]${categoryName.toLowerCase()}[or]categories[contains]${categoryName.toUpperCase()}`,
+      filters: `categories[contains]${categoryName}[or]categories[equals]${categoryName}`,
     },
   });
+  console.log('Fetched articles:', data);
   return data;
 };

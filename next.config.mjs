@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: 'img.shields.io',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.microcms-assets.io',
+        port: '',
+      },
     ],
   },
 };

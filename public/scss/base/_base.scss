@@ -60,3 +60,11 @@ a {
 .footer {
   grid-area: footer;
 }
+
+img {
+  max-width: rem(400);
+  max-height: rem(225);
+  width: clamp(18.75rem, 16.477rem + 11.36vw, 25rem);
+  height: clamp(9.375rem, 7.67rem + 8.52vw, 14.063rem);
+  object-fit: contain;
+}

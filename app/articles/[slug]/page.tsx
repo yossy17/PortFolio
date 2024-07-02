@@ -3,6 +3,8 @@ import { Inconsolata } from 'next/font/google';
 import { getArticleDetail, getArticleList } from '@/libs/microcms';
 import { generateSlug } from '@/libs/wanakana';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
 // import cheerio from 'cheerio';
 // import hljs from 'highlight.js';
 // import 'highlight.js/styles/atom-one-dark.min.css';
@@ -73,21 +75,29 @@ export default async function ArticlePage({ params }: { params: { slug: string }
 
   return (
     <article>
+      {fullArticle.thumbnail && (
+        <Image
+          src={fullArticle.thumbnail.url}
+          alt={fullArticle.title}
+          width={fullArticle.thumbnail.width}
+          height={fullArticle.thumbnail.height}
+        />
+      )}
       <h1>{fullArticle.title}</h1>
-      <p>カテゴリー: {fullArticle.categories.join(', ')}</p>
+      <p>
+        カテゴリー:
+        {fullArticle.categories.map((category, index) => (
+          <span key={category.id}>
+            <Link href={`/articles/categories/${category.categories.toLowerCase()}`}>
+              {category.categories}
+            </Link>
+            {index < fullArticle.categories.length - 1 && ', '}
+          </span>
+        ))}
+      </p>
       <p>作成日: {new Date(fullArticle.createdAt).toLocaleDateString()}</p>
       <p>更新日: {new Date(fullArticle.updatedAt).toLocaleDateString()}</p>
       <div dangerouslySetInnerHTML={{ __html: fullArticle.content }} />
-      {/*
-        {fullArticle.thumbnail && (
-          <Image
-            src={fullArticle.thumbnail.url}
-            alt={fullArticle.title}
-            width={fullArticle.thumbnail.width}
-            height={fullArticle.thumbnail.height}
-          />
-        )}
-      */}
     </article>
   );
 }
