@@ -66,7 +66,7 @@ export async function generateSlug(title: string): Promise<string> {
     .replace(/-+/g, '-') // 連続するハイフンを単一のハイフンに変換
     .replace(/^-+/, '') // 先頭のハイフンを削除
     .replace(/-+$/, '') // 末尾のハイフンを削除
-    .slice(0, 50); // 最大50文字に制限
+    .slice(0, 24); // 最大24文字に制限
 
   return slug;
 }
