@@ -6,6 +6,14 @@ export default async function ArticlesPage() {
   const { contents: articles, totalCount } = await getArticleList();
   const { contents: categories } = await getCategoryList();
 
+  // スラッグを事前に生成する
+  const articlesWithSlugs = await Promise.all(
+    articles.map(async (article) => ({
+      ...article,
+      slug: await generateSlug(article.title),
+    }))
+  );
+
   return (
     <>
       <h1>全ての記事一覧</h1>
@@ -23,9 +31,9 @@ export default async function ArticlesPage() {
       </nav>
       <p>記事数: {totalCount}</p>
       <ul>
-        {articles.map((article) => (
+        {articlesWithSlugs.map((article) => (
           <li key={article.id}>
-            <Link href={`/articles/${generateSlug(article.title)}`}>{article.title}</Link>
+            <Link href={`/articles/${article.slug}`}>{article.title}</Link>
             <p>更新日: {new Date(article.updatedAt).toLocaleDateString()}</p>
             <p>
               カテゴリー:

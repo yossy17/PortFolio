@@ -1,4 +1,3 @@
-// @\app\articles\categories\[categoryID]\page.tsx
 import { getArticlesByCategory, getCategoryList } from '@/libs/microcms';
 import { generateSlug } from '@/libs/wanakana';
 import Link from 'next/link';
@@ -21,14 +20,22 @@ export default async function CategoryPage({ params }: { params: { categoryID: s
 
   const { contents: articles, totalCount } = await getArticlesByCategory(category.id);
 
+  // スラッグを事前に生成する
+  const articlesWithSlugs = await Promise.all(
+    articles.map(async (article) => ({
+      ...article,
+      slug: await generateSlug(article.title),
+    }))
+  );
+
   return (
     <div>
       <h1>{params.categoryID} の記事一覧</h1>
       <p>記事数: {totalCount}</p>
       <ul>
-        {articles.map((article) => (
+        {articlesWithSlugs.map((article) => (
           <li key={article.id}>
-            <Link href={`/articles/${generateSlug(article.title)}`}>{article.title}</Link>
+            <Link href={`/articles/${article.slug}`}>{article.title}</Link>
             <p>更新日: {new Date(article.updatedAt).toLocaleDateString()}</p>
           </li>
         ))}

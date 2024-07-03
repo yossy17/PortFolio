@@ -1,4 +1,3 @@
-// C:\Users\hiito\Documents\.VSCode-pj\portfolio\app\articles\[slug]\page.tsx
 import { Inconsolata } from 'next/font/google';
 import { getArticleDetail, getArticleList } from '@/libs/microcms';
 import { generateSlug } from '@/libs/wanakana';
