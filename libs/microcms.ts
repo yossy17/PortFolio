@@ -1,5 +1,6 @@
 import { createClient, MicroCMSQueries, MicroCMSImage, MicroCMSDate } from 'microcms-js-sdk';
 
+// 記事の型定義
 export type Article = {
   id: string;
   title: string;
@@ -8,6 +9,7 @@ export type Article = {
   thumbnail?: MicroCMSImage;
 } & MicroCMSDate;
 
+// カテゴリーの型定義
 export type Category = {
   id: string;
   categories: string;
@@ -15,6 +17,7 @@ export type Category = {
 
 type ClientType = ReturnType<typeof createClient>;
 
+// 環境変数を取得する関数
 const getEnvVariable = (key: string): string => {
   const value = process.env[key];
   if (!value) {
@@ -23,6 +26,7 @@ const getEnvVariable = (key: string): string => {
   return value;
 };
 
+// microCMSクライアントを作成する関数
 const createMicroCMSClient = (): ClientType => {
   return createClient({
     serviceDomain: getEnvVariable('MICROCMS_SERVICE_DOMAIN'),
@@ -32,6 +36,7 @@ const createMicroCMSClient = (): ClientType => {
 
 let client: ClientType;
 
+// シングルトンパターンでクライアントを取得する関数
 const getClient = (): ClientType => {
   if (!client) {
     client = createMicroCMSClient();
@@ -39,6 +44,7 @@ const getClient = (): ClientType => {
   return client;
 };
 
+// 記事一覧を取得する関数
 export const getArticleList = async (queries?: MicroCMSQueries) => {
   const data = await getClient().getList<Article>({
     endpoint: 'article',
@@ -47,6 +53,7 @@ export const getArticleList = async (queries?: MicroCMSQueries) => {
   return data;
 };
 
+// 記事詳細を取得する関数
 export const getArticleDetail = async (contentId: string, queries?: MicroCMSQueries) => {
   const data = await getClient().getListDetail<Article>({
     endpoint: 'article',
@@ -56,6 +63,7 @@ export const getArticleDetail = async (contentId: string, queries?: MicroCMSQuer
   return data;
 };
 
+// カテゴリー一覧を取得する関数
 export const getCategoryList = async (queries?: MicroCMSQueries) => {
   const data = await getClient().getList<Category>({
     endpoint: 'categories',
@@ -64,8 +72,9 @@ export const getCategoryList = async (queries?: MicroCMSQueries) => {
   return data;
 };
 
+// カテゴリーに属する記事を取得する関数
 export const getArticlesByCategory = async (categoryName: string, queries?: MicroCMSQueries) => {
-  console.log('Fetching articles for category:', categoryName);
+  // console.log('Fetching articles for category:', categoryName);
   const data = await getClient().getList<Article>({
     endpoint: 'article',
     queries: {
@@ -73,6 +82,6 @@ export const getArticlesByCategory = async (categoryName: string, queries?: Micr
       filters: `categories[contains]${categoryName}[or]categories[equals]${categoryName}`,
     },
   });
-  console.log('Fetched articles:', data);
+  // console.log('Fetched articles:', data);
   return data;
 };

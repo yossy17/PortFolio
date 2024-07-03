@@ -3,10 +3,11 @@ import { generateSlug } from '@/libs/wanakana';
 import Link from 'next/link';
 
 export default async function ArticlesPage() {
+  // 記事一覧とカテゴリー一覧を取得
   const { contents: articles, totalCount } = await getArticleList();
   const { contents: categories } = await getCategoryList();
 
-  // スラッグを事前に生成する
+  // 各記事のスラッグを生成
   const articlesWithSlugs = await Promise.all(
     articles.map(async (article) => ({
       ...article,
@@ -19,6 +20,7 @@ export default async function ArticlesPage() {
       <h1>全ての記事一覧</h1>
       <nav>
         <Link href='/articles/categories'>カテゴリー詳細</Link>
+        {/* カテゴリー一覧を表示 */}
         <ul>
           {categories.map((category) => (
             <li key={category.id}>
@@ -30,6 +32,7 @@ export default async function ArticlesPage() {
         </ul>
       </nav>
       <p>記事数: {totalCount}</p>
+      {/* 記事一覧を表示 */}
       <ul>
         {articlesWithSlugs.map((article) => (
           <li key={article.id}>
