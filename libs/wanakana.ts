@@ -23,8 +23,18 @@ async function convertKanjiToHiragana(text: string): Promise<string> {
   }
 }
 
+// 括弧を-に置き換える関数
+function replaceBracketsWithHyphen(text: string): string {
+  const bracketsRegex =
+    /[\u0028\u0029\uFF08\uFF09\u239B\u239C\u239D\u239E\u239F\u23A0\uFE35\uFE36\uFD3E\uFD3F\uFE59\uFE5A\u2768\u2769\u276A\u276B\u207D\u207E\u208D\u208E\u2985\u2986\uFF5F\uFF60\u2E28\u2E29\u300C\u300D\uFF62\uFF63\uFE41\uFE42\u300E\u300F\uFE43\uFE44\u005B\u005D\uFF3B\uFF3D\u23A1\u23A2\u23A3\u23A4\u23A5\u23A6\uFE47\uFE48\u301A\u301B\u27E6\u27E7\u007B\u007D\uFF5B\uFF5D\u23A7\u23A8\u23A9\u23AA\u23AB\u23AC\u23AD\u23B0\u23B1\uFE37\uFE38\uFE5B\uFE5C\u2774\u2775\u3014\u3015\u2772\u2773\u27EE\u27EF\uFE39\uFE3A\u3018\u3019\u27EC\u27ED\u3008\u3009\u2329\u232A\u276C\u276D\u2770\u2771\u29FC\u29FD\u27E8\u27E9\uFE3F\uFE40\u300A\u300B\u27EA\u27EB\uFE3D\uFE3E\u00AB\u00BB\u2039\u203A\u003C\u003E\u3010\u3011\uFE3B\uFE3C\u3016\u3017\uFE17\uFE18]/g;
+  return text.replace(bracketsRegex, '-');
+}
+
 // タイトルからスラッグを生成する関数
 export async function generateSlug(title: string): Promise<string> {
+  // 括弧を-に置き換え
+  title = replaceBracketsWithHyphen(title);
+
   // タイトルを単語（空白で区切られた部分）に分割
   const words = title.split(/\s+/);
 
@@ -32,7 +42,7 @@ export async function generateSlug(title: string): Promise<string> {
   const processedWords = await Promise.all(
     words.map(async (word) => {
       // 単語を漢字と英数字に分割
-      const segments = word.split(/([a-zA-Z0-9]+)/);
+      const segments = word.split(/([a-zA-Z0-9-]+)/);
 
       // 各セグメントを処理
       const processedSegments = await Promise.all(
@@ -41,7 +51,7 @@ export async function generateSlug(title: string): Promise<string> {
             // 漢字をひらがなに変換
             return await convertKanjiToHiragana(segment);
           }
-          // 英数字はそのまま返す
+          // 英数字とハイフンはそのまま返す
           return segment;
         })
       );
