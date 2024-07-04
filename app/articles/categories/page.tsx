@@ -1,4 +1,3 @@
-// @\app\articles\categories\page.tsx
 import React from 'react';
 import Link from 'next/link';
 import { getCategoryList } from '@/libs/microcms';

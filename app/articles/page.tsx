@@ -1,5 +1,4 @@
 import { getArticleList, getCategoryList } from '@/libs/microcms';
-// import { generateSlug } from '@/libs/wanakana';
 import Link from 'next/link';
 
 export default async function ArticlesPage() {
