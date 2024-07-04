@@ -1,6 +1,5 @@
 import { Inconsolata } from 'next/font/google';
 import { getArticleDetail, getArticleList } from '@/libs/microcms';
-import { generateSlug } from '@/libs/wanakana';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -19,45 +18,28 @@ const inconsolata = Inconsolata({
 export async function generateStaticParams() {
   const { contents: articles } = await getArticleList({ fields: ['title'] });
 
-  const slugs = await Promise.all(
-    articles.map(async (article) => ({
-      slug: await generateSlug(article.title),
-    }))
-  );
-
-  return slugs;
+  return articles.map((article) => ({
+    id: article.id,
+  }));
 }
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
-  // 記事一覧を取得し、該当する記事を探す
-  const { contents: articles } = await getArticleList();
-  const article = await Promise.all(
-    articles.map(async (a) => {
-      const slug = await generateSlug(a.title);
-      return slug === params.slug ? a : null;
-    })
-  ).then((results) => results.find((a) => a !== null));
+export default async function ArticlePage({ params }: { params: { id: string } }) {
+  // 記事の詳細を取得
+  const article = await getArticleDetail(params.id);
 
   if (!article) {
     notFound();
   }
 
-  // 記事の詳細を取得
-  const fullArticle = await getArticleDetail(article.id);
-
-  if (!fullArticle) {
-    notFound();
-  }
-
   // 記事の内容が有効かチェック
-  if (!fullArticle.content || typeof fullArticle.content !== 'string') {
-    console.error('Invalid article content:', fullArticle.content);
+  if (!article.content || typeof article.content !== 'string') {
+    console.error('Invalid article content:', article.content);
     return <div>記事の内容を読み込めませんでした。</div>;
   }
 
-  // シンタックスハイライト処理（現在はコメントアウト）
+  // シンタックスハイライト処理
   // try {
-  //   const $ = cheerio.load(fullArticle.content);
+  //   const $ = cheerio.load(article.content);
   //   $('div[data-filename]').each((_, element) => {
   //     const filename = $(element).attr('data-filename');
   //     $(element).prepend(`<p>${filename}</p>`);
@@ -71,7 +53,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
   //     $(element).addClass('hljs');
   //     $(element).addClass(inconsolata.className);
   //   });
-  //   fullArticle.content = $.html();
+  //   article.content = $.html();
   // } catch (error) {
   //   console.error('Error processing article content:', error);
   // }
@@ -79,31 +61,31 @@ export default async function ArticlePage({ params }: { params: { slug: string }
   return (
     <article>
       {/* サムネイル画像の表示 */}
-      {fullArticle.thumbnail && (
+      {article.thumbnail && (
         <Image
-          src={fullArticle.thumbnail.url}
-          alt={fullArticle.title}
-          width={fullArticle.thumbnail.width}
-          height={fullArticle.thumbnail.height}
+          src={article.thumbnail.url}
+          alt={article.title}
+          width={article.thumbnail.width}
+          height={article.thumbnail.height}
         />
       )}
-      <h1>{fullArticle.title}</h1>
+      <h1>{article.title}</h1>
       {/* カテゴリーの表示 */}
       <p>
         カテゴリー:
-        {fullArticle.categories.map((category, index) => (
+        {article.categories.map((category, index) => (
           <span key={category.id}>
             <Link href={`/articles/categories/${category.categories.toLowerCase()}`}>
               {category.categories}
             </Link>
-            {index < fullArticle.categories.length - 1 && ', '}
+            {index < article.categories.length - 1 && ', '}
           </span>
         ))}
       </p>
-      <p>作成日: {new Date(fullArticle.createdAt).toLocaleDateString()}</p>
-      <p>更新日: {new Date(fullArticle.updatedAt).toLocaleDateString()}</p>
+      <p>作成日: {new Date(article.createdAt).toLocaleDateString()}</p>
+      <p>更新日: {new Date(article.updatedAt).toLocaleDateString()}</p>
       {/* 記事の内容を表示 */}
-      <div dangerouslySetInnerHTML={{ __html: fullArticle.content }} />
+      <div dangerouslySetInnerHTML={{ __html: article.content }} />
     </article>
   );
 }
