@@ -34,12 +34,20 @@ export async function generateMetadata({
       };
     }
 
+    const description = article.intro ? stripHtml(article.intro).substring(0, 160) : '';
+
     return {
       title: article.title,
-      description: article.intro,
+      description: description,
       openGraph: {
         title: article.title,
-        description: article.intro ? stripHtml(article.intro).substring(0, 160) : '',
+        description: description,
+        images: article.thumbnail ? [article.thumbnail.url] : [],
+      },
+      twitter: {
+        card: 'summary',
+        title: article.title,
+        description: description,
         images: article.thumbnail ? [article.thumbnail.url] : [],
       },
     };
