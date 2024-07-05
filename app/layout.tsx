@@ -1,17 +1,11 @@
 import type { Metadata } from 'next';
+import { notoSansJP } from '@/components/Ui/Fonts/Fonts';
 import * as Base from '@/components/Base/Index';
-import { Noto_Sans_JP } from 'next/font/google';
 import '@/public/Styles/app.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 
 config.autoAddCss = false;
-
-const notoSansJP = Noto_Sans_JP({
-  weight: ['400'],
-  subsets: ['latin'],
-  style: ['normal'],
-});
 
 export const metadata: Metadata = {
   title: 'Yos_sy Portfolio',

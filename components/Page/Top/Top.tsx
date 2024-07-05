@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import styles from './index.module.css';
+import { rockwellNovaBold } from '@/components/Ui/Fonts/Fonts';
 
 export default async function ArticlesPage() {
   // 記事一覧とカテゴリー一覧を取得
@@ -16,7 +16,9 @@ export default async function ArticlesPage() {
 
   return (
     <>
-      <Link href='/articles'>Articles</Link>
+      <Link href='/articles' className={`${rockwellNovaBold.className}`}>
+        Articles
+      </Link>
       {articles.map((article) => (
         <article key={article.id}>
           {/* <Link href={`/articles/${article.id}`}>{article.title}</Link> */}

@@ -3,13 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareXTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { Poppins } from 'next/font/google';
-
-const poppins = Poppins({
-  weight: ['600'],
-  subsets: ['latin'],
-  style: ['normal'],
-});
+import { poppins } from '@/components/Ui/Fonts/Fonts';
 
 const TopSidebar = () => {
   return (

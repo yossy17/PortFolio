@@ -3,13 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { Poppins } from 'next/font/google';
-
-const poppins = Poppins({
-  weight: ['600'],
-  subsets: ['latin'],
-  style: ['normal'],
-});
+import { poppins } from '@/components/Ui/Fonts/Fonts';
 
 const HeaderMain = () => {
   return (
