@@ -34,13 +34,22 @@ export async function generateMetadata({
       };
     }
 
+    const description = article.intro ? stripHtml(article.intro).substring(0, 160) : '';
+    const imageUrl = article.thumbnail ? article.thumbnail.url : '';
+
     return {
       title: article.title,
-      description: article.intro,
+      description: description,
       openGraph: {
         title: article.title,
-        description: article.intro ? stripHtml(article.intro).substring(0, 160) : '',
-        images: article.thumbnail ? [article.thumbnail.url] : [],
+        description: description,
+        images: imageUrl ? [imageUrl] : [],
+      },
+      twitter: {
+        card: 'summary',
+        title: article.title,
+        description: description,
+        images: imageUrl ? [imageUrl] : [],
       },
     };
   } catch (error) {
