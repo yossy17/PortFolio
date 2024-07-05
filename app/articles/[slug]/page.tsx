@@ -34,22 +34,13 @@ export async function generateMetadata({
       };
     }
 
-    const description = article.intro ? stripHtml(article.intro).substring(0, 160) : '';
-    const imageUrl = article.thumbnail ? article.thumbnail.url : '';
-
     return {
       title: article.title,
-      description: description,
+      description: article.intro,
       openGraph: {
         title: article.title,
-        description: description,
-        images: imageUrl ? [imageUrl] : [],
-      },
-      twitter: {
-        card: 'summary',
-        title: article.title,
-        description: description,
-        images: imageUrl ? [imageUrl] : [],
+        description: article.intro ? stripHtml(article.intro).substring(0, 160) : '',
+        images: article.thumbnail ? [{ url: article.thumbnail.url, width: 800, height: 800 }] : [],
       },
     };
   } catch (error) {
@@ -79,12 +70,14 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     return (
       <article>
         {article.thumbnail && (
-          <Image
-            src={article.thumbnail.url}
-            alt={article.title}
-            width={article.thumbnail.width}
-            height={article.thumbnail.height}
-          />
+          <div style={{ position: 'relative', width: '100%', paddingBottom: '100%' }}>
+            <Image
+              src={article.thumbnail.url}
+              alt={article.title}
+              layout='fill'
+              objectFit='cover'
+            />
+          </div>
         )}
         <h1>{article.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: article.intro }} />
