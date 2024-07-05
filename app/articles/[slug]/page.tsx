@@ -3,6 +3,12 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { inconsolata } from '@/components/Ui/Fonts/Fonts';
+import { Metadata } from 'next';
+
+// メタデータのdescriptionでHTMLタグを除去
+function stripHtml(html: string) {
+  return html.replace(/<[^>]*>?/gm, '');
+}
 
 // 静的生成のためのパラメータを生成
 export async function generateStaticParams() {
@@ -11,6 +17,39 @@ export async function generateStaticParams() {
   return articles.map((article) => ({
     slug: article.id,
   }));
+}
+
+// メタデータを動的に生成
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  try {
+    const article = await getArticleDetail(params.slug);
+
+    if (!article) {
+      return {
+        title: 'Article Not Found',
+      };
+    }
+
+    return {
+      title: article.title,
+      description: article.intro,
+      openGraph: {
+        title: article.title,
+        description: article.intro ? stripHtml(article.intro).substring(0, 160) : '',
+        images: article.thumbnail ? [article.thumbnail.url] : [],
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching metadata:', error);
+    return {
+      title: 'Error',
+      description: 'An error occurred while fetching article metadata.',
+    };
+  }
 }
 
 export default async function ArticlePage({ params }: { params: { slug: string } }) {
@@ -30,7 +69,6 @@ export default async function ArticlePage({ params }: { params: { slug: string }
 
     return (
       <article>
-        {/* サムネイル画像の表示 */}
         {article.thumbnail && (
           <Image
             src={article.thumbnail.url}
@@ -40,7 +78,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           />
         )}
         <h1>{article.title}</h1>
-        {/* カテゴリーの表示 */}
+        <div dangerouslySetInnerHTML={{ __html: article.intro }} />
         <p>
           カテゴリー:
           {article.categories.map((category, index) => (
@@ -54,7 +92,6 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         </p>
         <p>作成日: {new Date(article.createdAt).toLocaleDateString()}</p>
         <p>更新日: {new Date(article.updatedAt).toLocaleDateString()}</p>
-        {/* 記事の内容を表示 */}
         <div dangerouslySetInnerHTML={{ __html: article.content }} />
       </article>
     );

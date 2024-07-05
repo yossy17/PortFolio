@@ -4,6 +4,7 @@ import { createClient, MicroCMSQueries, MicroCMSImage, MicroCMSDate } from 'micr
 export type Article = {
   id: string;
   title: string;
+  intro: string;
   content: string;
   categories: Category[];
   thumbnail?: MicroCMSImage;
