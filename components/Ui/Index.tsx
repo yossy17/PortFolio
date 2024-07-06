@@ -1,3 +1,3 @@
-// import Sidebar from './TopSidebar/TopSidebar';
+import ScrollHandler from './ScrollHandler/ScrollHandler';
 
-// export { Sidebar };
+export { ScrollHandler };
