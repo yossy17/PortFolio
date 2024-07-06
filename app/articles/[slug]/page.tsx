@@ -4,6 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { inconsolata } from '@/components/Ui/Fonts/Fonts';
 import { Metadata } from 'next';
+import cheerio from 'cheerio';
+import hljs from 'highlight.js';
+
+import 'highlight.js/styles/atom-one-dark.min.css';
 
 // メタデータのdescriptionでHTMLタグを除去
 function stripHtml(html: string) {
@@ -11,15 +15,6 @@ function stripHtml(html: string) {
 }
 
 // 静的生成のためのパラメータを生成
-export async function generateStaticParams() {
-  const { contents: articles } = await getArticleList({ fields: ['id'] });
-
-  return articles.map((article) => ({
-    slug: article.id,
-  }));
-}
-
-// メタデータを動的に生成
 export async function generateMetadata({
   params,
 }: {
@@ -36,19 +31,29 @@ export async function generateMetadata({
 
     const description = article.intro ? stripHtml(article.intro).substring(0, 160) : '';
 
+    const thumbnailInfo = article.Info?.find((info) => info.fieldId === 'thumbnail');
+    const youtubeInfo = article.Info?.find((info) => info.fieldId === 'youtubeInfo');
+
+    let imageUrl = '';
+    if (thumbnailInfo?.thumbnail?.url) {
+      imageUrl = thumbnailInfo.thumbnail.url;
+    } else if (youtubeInfo?.youtubeID) {
+      imageUrl = `https://img.youtube.com/vi/${youtubeInfo.youtubeID}/hqdefault.jpg`;
+    }
+
     return {
       title: article.title,
       description: description,
       openGraph: {
         title: article.title,
         description: description,
-        images: article.thumbnail ? [article.thumbnail.url] : [],
+        images: imageUrl ? [imageUrl] : [],
       },
       twitter: {
         card: 'summary',
         title: article.title,
         description: description,
-        images: article.thumbnail ? [article.thumbnail.url] : [],
+        images: imageUrl ? [imageUrl] : [],
       },
     };
   } catch (error) {
@@ -61,7 +66,6 @@ export async function generateMetadata({
 }
 
 export default async function ArticlePage({ params }: { params: { slug: string } }) {
-  // 記事の詳細を取得
   try {
     const article = await getArticleDetail(params.slug);
 
@@ -69,20 +73,38 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       notFound();
     }
 
-    // 記事の内容が有効かチェック
     if (!article.content || typeof article.content !== 'string') {
       console.error('Invalid article content:', article.content);
       return <div>記事の内容を読み込めませんでした。</div>;
     }
 
+    // サムネイル情報の取得
+    const thumbnailInfo = article.Info?.find((info) => info.fieldId === 'thumbnail');
+    const youtubeInfo = article.Info?.find((info) => info.fieldId === 'youtubeInfo');
+
+    let imageUrl = '';
+    let width = 0;
+    let height = 0;
+
+    if (thumbnailInfo?.thumbnail) {
+      imageUrl = thumbnailInfo.thumbnail.url;
+      width = thumbnailInfo.thumbnail.width || 0;
+      height = thumbnailInfo.thumbnail.height || 0;
+    } else if (youtubeInfo?.youtubeID) {
+      imageUrl = `https://img.youtube.com/vi/${youtubeInfo.youtubeID}/hqdefault.jpg`;
+      width = 480; // YouTube のhqdefault サムネイルの標準サイズ
+      height = 360; // YouTube のhqdefault サムネイルの標準サイズ
+    }
+
     return (
       <article>
-        {article.thumbnail && (
+        {imageUrl && (
           <Image
-            src={article.thumbnail.url}
+            src={imageUrl}
             alt={article.title}
-            width={article.thumbnail.width}
-            height={article.thumbnail.height}
+            width={width}
+            height={height}
+            id='thumbnail-image'
           />
         )}
         <h1>{article.title}</h1>

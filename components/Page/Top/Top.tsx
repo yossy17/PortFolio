@@ -19,20 +19,40 @@ export default async function ArticlesPage() {
       <Link href='/articles' className={`${rockwellNovaBold.className}`}>
         Articles
       </Link>
-      {articles.map((article) => (
-        <article key={article.id}>
-          {/* <Link href={`/articles/${article.id}`}>{article.title}</Link> */}
-          {article.thumbnail && (
-            <Image
-              src={article.thumbnail.url}
-              alt={article.title}
-              width={article.thumbnail.width}
-              height={article.thumbnail.height}
-              className='TestImageTop'
-            />
-          )}
-        </article>
-      ))}
+      {articles.map((article) => {
+        // サムネイル情報の取得
+        const thumbnailInfo = article.Info?.find((info) => info.fieldId === 'thumbnail');
+        const youtubeInfo = article.Info?.find((info) => info.fieldId === 'youtubeInfo');
+
+        let imageUrl = '';
+        let width = 0;
+        let height = 0;
+
+        if (thumbnailInfo?.thumbnail) {
+          imageUrl = thumbnailInfo.thumbnail.url;
+          width = thumbnailInfo.thumbnail.width || 0;
+          height = thumbnailInfo.thumbnail.height || 0;
+        } else if (youtubeInfo?.youtubeID) {
+          imageUrl = `https://img.youtube.com/vi/${youtubeInfo.youtubeID}/hqdefault.jpg`;
+          width = 480; // YouTube のhqdefault サムネイルの標準サイズ
+          height = 360; // YouTube のhqdefault サムネイルの標準サイズ
+        }
+
+        return (
+          <article key={article.id}>
+            {imageUrl && (
+              <Image
+                id='thumbnail-image'
+                src={imageUrl}
+                alt={article.title}
+                width={width}
+                height={height}
+                className='TestImageTop'
+              />
+            )}
+          </article>
+        );
+      })}
     </>
   );
 }

@@ -7,8 +7,16 @@ export type Article = {
   intro: string;
   content: string;
   categories: Category[];
-  thumbnail?: MicroCMSImage;
+  Info: ArticleInfo[];
 } & MicroCMSDate;
+
+// 記事の情報の型定義
+export type ArticleInfo = {
+  fieldId: 'thumbnail' | 'youtubeInfo';
+  thumbnail?: MicroCMSImage;
+  youtubeID?: string;
+  videoFormat?: string[];
+};
 
 // カテゴリーの型定義
 export type Category = {
@@ -75,7 +83,6 @@ export const getCategoryList = async (queries?: MicroCMSQueries) => {
 
 // カテゴリーに属する記事を取得する関数
 export const getArticlesByCategory = async (categoryName: string, queries?: MicroCMSQueries) => {
-  // console.log('Fetching articles for category:', categoryName);
   const data = await getClient().getList<Article>({
     endpoint: 'article',
     queries: {
@@ -83,6 +90,5 @@ export const getArticlesByCategory = async (categoryName: string, queries?: Micr
       filters: `categories[contains]${categoryName}[or]categories[equals]${categoryName}`,
     },
   });
-  // console.log('Fetched articles:', data);
   return data;
 };

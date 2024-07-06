@@ -12,6 +12,11 @@ const nextConfig = {
         hostname: 'images.microcms-assets.io',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+        port: '',
+      },
     ],
   },
 };
