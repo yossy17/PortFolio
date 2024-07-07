@@ -21,13 +21,13 @@ export const inconsolata = Inconsolata({
 
 // カスタムローカルフォントを定義する
 export const rockwellNovaBold = localFont({
-  src: '../../../public/fonts/RockwellNova-Bold.ttf',
+  src: '../../../public/Fonts/RockwellNova-Bold.ttf',
 });
 
 export const consola = localFont({
-  src: '../../../public/fonts/consola.ttf',
+  src: '../../../public/Fonts/consola.ttf',
 });
 
 export const meiryo = localFont({
-  src: '../../../public/fonts/meiryo.ttf',
+  src: '../../../public/Fonts/meiryo.ttf',
 });
