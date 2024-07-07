@@ -24,8 +24,8 @@ body {
   grid-template:
     '  header '
     '  ...... ' rem(150)
-    ' sidebar '
     '   main  ' 1fr
+    ' sidebar '
     '  footer '
     / 100%;
 
