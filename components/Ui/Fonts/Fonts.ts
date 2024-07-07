@@ -25,5 +25,9 @@ export const rockwellNovaBold = localFont({
 });
 
 export const consola = localFont({
-  src: '../../../public/fonts/CONSOLA.ttf',
+  src: '../../../public/fonts/consola.ttf',
+});
+
+export const meiryo = localFont({
+  src: '../../../public/fonts/meiryo.ttf',
 });

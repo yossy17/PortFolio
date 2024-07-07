@@ -85,3 +85,38 @@ a {
   font-size: rem(14);
   line-height: rem(24);
 }
+
+.Hoge {
+  max-width: rem(650);
+  margin-block: rem(20);
+  background: #22272e;
+
+  p {
+    background: $tertiarybg;
+    padding: rem(8);
+    display: inline-block;
+    border-radius: 0 0 rem(10);
+  }
+
+  pre {
+    code {
+      overflow: hidden;
+
+      &::-webkit-scrollbar {
+        background: #22272e;
+        width: auto;
+        height: rem(10);
+        border-radius: 0;
+      }
+
+      .scroll_bar::-webkit-scrollbar-track {
+        background-color: #ccc;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $gray;
+        border-radius: rem(10);
+      }
+    }
+  }
+}

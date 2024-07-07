@@ -1,21 +1,9 @@
 import React from 'react';
 
-const loading = () => {
+export default function Loading() {
   return (
-    // <div className='loading'>
-    //   <div id='loading__circle--wrap'>
-    //     <span className='loading__circle'></span>
-    //     <span className='loading__circle'></span>
-    //     <span className='loading__circle'></span>
-    //   </div>
-    //   <div id='loading__shadow--wrap'>
-    //     <span className='loading__shadow'></span>
-    //     <span className='loading__shadow'></span>
-    //     <span className='loading__shadow'></span>
-    //   </div>
-    // </div>
-    <></>
+    <div className='loader-container'>
+      <div className='loader'></div>
+    </div>
   );
-};
-
-export default loading;
+}
