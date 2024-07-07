@@ -29,5 +29,5 @@ export const consola = localFont({
 });
 
 export const meiryo = localFont({
-  src: '../../../public/Fonts/meiryo.ttf',
+  src: '../../../public/Fonts/Meiryo.ttf',
 });
