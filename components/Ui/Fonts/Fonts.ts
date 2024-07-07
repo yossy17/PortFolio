@@ -13,7 +13,6 @@ export const poppins = Poppins({
   style: ['normal'],
 });
 
-// Inconsolataフォントの設定
 export const inconsolata = Inconsolata({
   weight: ['400'],
   subsets: ['latin'],
@@ -23,4 +22,8 @@ export const inconsolata = Inconsolata({
 // カスタムローカルフォントを定義する
 export const rockwellNovaBold = localFont({
   src: '../../../public/fonts/RockwellNova-Bold.ttf',
+});
+
+export const consola = localFont({
+  src: '../../../public/fonts/CONSOLA.ttf',
 });

@@ -2,12 +2,11 @@ import { getArticleDetail, getArticleList } from '@/libs/microcms';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { inconsolata } from '@/components/Ui/Fonts/Fonts';
+import { inconsolata, consola } from '@/components/Ui/Fonts/Fonts';
 import { Metadata } from 'next';
 import cheerio from 'cheerio';
 import hljs from 'highlight.js';
-
-import 'highlight.js/styles/atom-one-dark.min.css';
+import 'highlight.js/styles/github-dark-dimmed.min.css';
 
 // メタデータのdescriptionでHTMLタグを除去
 function stripHtml(html: string) {
@@ -78,34 +77,41 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       return <div>記事の内容を読み込めませんでした。</div>;
     }
 
+    // コードハイライトの実装
+    const $ = cheerio.load(article.content);
+    $('div[data-filename]').each((_, element) => {
+      const filename = $(element).attr('data-filename');
+      $(element).prepend(`<p>${filename}</p>`);
+      $(element).addClass('Hoge');
+      $(element).addClass(consola.className);
+    });
+    $('pre code').each((_, element) => {
+      const code = $(element).text();
+      const highlightedCode = hljs.highlightAuto(code).value;
+      $(element).html(highlightedCode);
+      $(element).addClass('hljs');
+      $(element).addClass(consola.className);
+    });
+
+    // ハイライト済みの内容で article.content を更新
+    article.content = $.html();
+
     // サムネイル情報の取得
-    const thumbnailInfo = article.Info?.find((info) => info.fieldId === 'thumbnail');
     const youtubeInfo = article.Info?.find((info) => info.fieldId === 'youtubeInfo');
+    const thumbnailInfo = article.Info?.find((info) => info.fieldId === 'thumbnail');
 
     let imageUrl = '';
-    let width = 0;
-    let height = 0;
 
-    if (thumbnailInfo?.thumbnail) {
-      imageUrl = thumbnailInfo.thumbnail.url;
-      width = thumbnailInfo.thumbnail.width || 0;
-      height = thumbnailInfo.thumbnail.height || 0;
-    } else if (youtubeInfo?.youtubeID) {
+    if (youtubeInfo?.youtubeID) {
       imageUrl = `https://img.youtube.com/vi/${youtubeInfo.youtubeID}/hqdefault.jpg`;
-      width = 480; // YouTube のhqdefault サムネイルの標準サイズ
-      height = 360; // YouTube のhqdefault サムネイルの標準サイズ
+    } else if (thumbnailInfo?.thumbnail) {
+      imageUrl = thumbnailInfo.thumbnail.url;
     }
 
     return (
       <article>
         {imageUrl && (
-          <Image
-            src={imageUrl}
-            alt={article.title}
-            width={width}
-            height={height}
-            id='thumbnail-image'
-          />
+          <Image src={imageUrl} alt={article.title} width='400' height='225' id='thumbnail-image' />
         )}
         <h1>{article.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: article.intro }} />

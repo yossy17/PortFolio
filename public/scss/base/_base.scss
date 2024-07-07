@@ -80,3 +80,8 @@ a {
   height: clamp(11.719rem, 10.298rem + 7.1vw, 15.625rem);
   object-fit: contain;
 }
+
+.hljs {
+  font-size: rem(14);
+  line-height: rem(24);
+}
