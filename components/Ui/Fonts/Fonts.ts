@@ -28,6 +28,6 @@ export const consola = localFont({
   src: '../../../public/Fonts/consola.ttf',
 });
 
-export const meiryo = localFont({
-  src: '../../../public/Fonts/Meiryo.ttf',
-});
+// export const meiryo = localFont({
+//   src: '../../../public/Fonts/Meiryo.ttf',
+// });
