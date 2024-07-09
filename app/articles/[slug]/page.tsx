@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { inconsolata, consola } from '@/components/Ui/Fonts/Fonts';
 import { Metadata } from 'next';
-import cheerio from 'cheerio';
-import hljs from 'highlight.js';
+// import cheerio from 'cheerio';
+// import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark-dimmed.min.css';
 
 // メタデータのdescriptionでHTMLタグを除去
@@ -77,24 +77,24 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       return <div>記事の内容を読み込めませんでした。</div>;
     }
 
-    // コードハイライトの実装
-    const $ = cheerio.load(article.content);
-    $('div[data-filename]').each((_, element) => {
-      const filename = $(element).attr('data-filename');
-      $(element).prepend(`<p>${filename}</p>`);
-      $(element).addClass('Hoge');
-      $(element).addClass(consola.className);
-    });
-    $('pre code').each((_, element) => {
-      const code = $(element).text();
-      const highlightedCode = hljs.highlightAuto(code).value;
-      $(element).html(highlightedCode);
-      $(element).addClass('hljs');
-      $(element).addClass(consola.className);
-    });
+    // // コードハイライトの実装
+    // const $ = cheerio.load(article.content);
+    // $('div[data-filename]').each((_, element) => {
+    //   const filename = $(element).attr('data-filename');
+    //   $(element).prepend(`<p>${filename}</p>`);
+    //   $(element).addClass('Hoge');
+    //   $(element).addClass(consola.className);
+    // });
+    // $('pre code').each((_, element) => {
+    //   const code = $(element).text();
+    //   const highlightedCode = hljs.highlightAuto(code).value;
+    //   $(element).html(highlightedCode);
+    //   $(element).addClass('hljs');
+    //   $(element).addClass(consola.className);
+    // });
 
-    // ハイライト済みの内容で article.content を更新
-    article.content = $.html();
+    // // ハイライト済みの内容で article.content を更新
+    // article.content = $.html();
 
     // サムネイル情報の取得
     const youtubeInfo = article.Info?.find((info) => info.fieldId === 'youtubeInfo');
