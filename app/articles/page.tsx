@@ -1,10 +1,10 @@
+// @/app/articles/page.tsx
 import { getArticleList, getCategoryList } from '@/libs/microcms';
 import Link from 'next/link';
 
 export default async function ArticlesPage() {
-  // 記事一覧とカテゴリー一覧を取得
-  const { contents: articles, totalCount } = await getArticleList();
-  const { contents: categories } = await getCategoryList();
+  // 記事一覧とカテゴリー一覧を並列で取得
+  const [articles, categories] = await Promise.all([getArticleList(), getCategoryList()]);
 
   return (
     <div className='main__articles'>
@@ -14,7 +14,8 @@ export default async function ArticlesPage() {
           カテゴリー詳細
         </Link>
         <ul className='main__articles__catDetail__list'>
-          {categories.map((category) => (
+          {/* カテゴリー一覧の表示 */}
+          {categories.contents.map((category) => (
             <li key={category.id} className='main__articles__catDetail__list__type'>
               <Link href={`/articles/categories/${category.categories}`}>
                 {category.categories}
@@ -23,9 +24,10 @@ export default async function ArticlesPage() {
           ))}
         </ul>
       </nav>
-      <p className='main__articles__count'>記事数: {totalCount}</p>
+      <p className='main__articles__count'>記事数: {articles.totalCount}</p>
       <div className='main__articles__cards'>
-        {articles.map((article) => (
+        {/* 記事一覧の表示 */}
+        {articles.contents.map((article) => (
           <article key={article.id} className='main__articles__cards__card'>
             <Link href={`/articles/${article.id}`} className='main__articles__cards__card__link'>
               {article.title}

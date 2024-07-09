@@ -1,4 +1,4 @@
-import React from 'react';
+// @/app/articles/categories/page.tsx
 import Link from 'next/link';
 import { getCategoryList } from '@/libs/microcms';
 
@@ -10,8 +10,8 @@ export default async function CategoriesPage() {
     <>
       <h1>カテゴリー一覧</h1>
       <p>カテゴリー数: {totalCount}</p>
-      {/* カテゴリー一覧を表示 */}
       <ul>
+        {/* カテゴリー一覧の表示 */}
         {categories.map((category) => (
           <li key={category.id}>
             <Link href={`/articles/categories/${category.categories}`}>{category.categories}</Link>

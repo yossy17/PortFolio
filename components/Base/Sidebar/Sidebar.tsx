@@ -19,8 +19,8 @@ const TopSidebar = () => {
                 <Image
                   src='/Imgs/Base/Yossy.webp'
                   alt='icon'
-                  width={250}
-                  height={250}
+                  width={60}
+                  height={60}
                   unoptimized
                 ></Image>
               </div>

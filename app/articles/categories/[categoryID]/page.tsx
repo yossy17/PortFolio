@@ -1,3 +1,4 @@
+// @/app/articles/categories/[categoryID]/page.tsx
 import { getArticlesByCategory, getCategoryList } from '@/libs/microcms';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -26,8 +27,8 @@ export default async function CategoryPage({ params }: { params: { categoryID: s
     <div>
       <h1>{params.categoryID} の記事一覧</h1>
       <p>記事数: {totalCount}</p>
-      {/* 記事一覧を表示 */}
       <ul>
+        {/* 記事一覧の表示 */}
         {articles.map((article) => (
           <li key={article.id}>
             <Link href={`/articles/${article.id}`}>{article.title}</Link>
