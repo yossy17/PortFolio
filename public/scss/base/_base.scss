@@ -68,17 +68,9 @@ a {
 #thumbnail-image {
   max-width: rem(400);
   max-height: rem(225);
-  width: clamp(18.75rem, 16.477rem + 11.36vw, 25rem);
-  height: clamp(9.375rem, 7.67rem + 8.52vw, 14.063rem);
+  width: clamp(15.625rem, 12.216rem + 17.05vw, 25rem);
+  height: clamp(8.789rem, 6.871rem + 9.59vw, 14.063rem);
   object-fit: cover;
-}
-
-.TestImageTop {
-  max-width: rem(450);
-  max-height: rem(250);
-  width: clamp(21.094rem, 18.537rem + 12.78vw, 28.125rem);
-  height: clamp(11.719rem, 10.298rem + 7.1vw, 15.625rem);
-  object-fit: contain;
 }
 
 .hljs {
@@ -96,6 +88,7 @@ a {
     padding: rem(8);
     display: inline-block;
     border-radius: 0 0 rem(10);
+    font-size: clamp(0.5rem, 0.364rem + 0.68vw, 0.875rem);
   }
 
   pre {

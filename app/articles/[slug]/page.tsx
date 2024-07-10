@@ -100,7 +100,9 @@ export default async function ArticlePage({ params }: { params: { slug: string }
 
     return (
       <article>
-        {imageUrl && <Image src={imageUrl} alt={article.title} width={400} height={225} />}
+        {imageUrl && (
+          <Image src={imageUrl} alt={article.title} width={400} height={225} id='thumbnail-image' />
+        )}
         <h1>{article.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: article.intro }} />
         <p>
