@@ -1,19 +1,19 @@
+// @/components/Ui/DynamicHighlight/DynamicHighlight.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
-import { inconsolata, consola } from '@/components/Ui/Fonts/Fonts';
+import { useMemo } from 'react';
+import { consola } from '@/components/Ui/Fonts/Fonts';
 import cheerio from 'cheerio';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark-dimmed.min.css';
+import Loading from '@/app/loading';
 
 interface DynamicHighlightProps {
   content: string;
 }
 
 export default function DynamicHighlight({ content }: DynamicHighlightProps) {
-  const [highlightedContent, setHighlightedContent] = useState(content);
-
-  useEffect(() => {
+  const highlightedContent = useMemo(() => {
     const $ = cheerio.load(content);
     $('div[data-filename]').each((_, element) => {
       const filename = $(element).attr('data-filename') ?? 'Unknown file';
@@ -35,11 +35,16 @@ export default function DynamicHighlight({ content }: DynamicHighlightProps) {
       } catch (error) {
         console.error('Error highlighting code:', error);
         // エラーが発生した場合、元のコードをそのまま使用
+        $(element).html(code);
       }
     });
 
-    setHighlightedContent($.html());
+    return $.html();
   }, [content]);
+
+  if (!highlightedContent) {
+    return <Loading />;
+  }
 
   return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
 }

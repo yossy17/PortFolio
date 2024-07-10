@@ -1,11 +1,18 @@
 // @/app/articles/[slug]/page.tsx
-import { getArticleDetail } from '@/libs/microcms';
+import { getArticleDetail, Article, Category } from '@/libs/microcms';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { inconsolata, consola } from '@/components/Ui/Fonts/Fonts';
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
+
+// ArticleInfo 型を明示的に定義
+type ArticleInfo = {
+  fieldId: 'thumbnail' | 'youtubeInfo';
+  thumbnail?: { url: string };
+  youtubeID?: string;
+};
 
 // HTMLタグを除去する関数
 function stripHtml(html: string) {
@@ -14,7 +21,7 @@ function stripHtml(html: string) {
 
 // DynamicHighlightコンポーネントを動的にインポート
 const DynamicHighlight = dynamic(
-  () => import('@/components/Ui/DynamicHighlight/DynamicHighlight.tsx'),
+  () => import('@/components/Ui/DynamicHighlight/DynamicHighlight'),
   { ssr: false }
 );
 
@@ -32,15 +39,7 @@ export async function generateMetadata({
     }
 
     const description = article.intro ? stripHtml(article.intro).substring(0, 160) : '';
-
-    const thumbnailInfo = article.Info?.find((info) => info.fieldId === 'thumbnail');
-    const youtubeInfo = article.Info?.find((info) => info.fieldId === 'youtubeInfo');
-
-    let imageUrl =
-      thumbnailInfo?.thumbnail?.url ||
-      (youtubeInfo?.youtubeID
-        ? `https://img.youtube.com/vi/${youtubeInfo.youtubeID}/hqdefault.jpg`
-        : '');
+    const imageUrl = getImageUrl(article);
 
     return {
       title: article.title,
@@ -51,7 +50,7 @@ export async function generateMetadata({
         images: imageUrl ? [imageUrl] : [],
       },
       twitter: {
-        card: 'summary',
+        card: 'summary_large_image',
         title: article.title,
         description,
         images: imageUrl ? [imageUrl] : [],
@@ -64,6 +63,18 @@ export async function generateMetadata({
       description: 'An error occurred while fetching article metadata.',
     };
   }
+}
+
+function getImageUrl(article: Article): string | undefined {
+  const thumbnailInfo = article.Info?.find((info: ArticleInfo) => info.fieldId === 'thumbnail');
+  const youtubeInfo = article.Info?.find((info: ArticleInfo) => info.fieldId === 'youtubeInfo');
+
+  return (
+    thumbnailInfo?.thumbnail?.url ||
+    (youtubeInfo?.youtubeID
+      ? `https://img.youtube.com/vi/${youtubeInfo.youtubeID}/hqdefault.jpg`
+      : undefined)
+  );
 }
 
 export default async function ArticlePage({ params }: { params: { slug: string } }) {
@@ -80,8 +91,8 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     }
 
     // サムネイル情報の取得
-    const youtubeInfo = article.Info?.find((info) => info.fieldId === 'youtubeInfo');
-    const thumbnailInfo = article.Info?.find((info) => info.fieldId === 'thumbnail');
+    const youtubeInfo = article.Info?.find((info: ArticleInfo) => info.fieldId === 'youtubeInfo');
+    const thumbnailInfo = article.Info?.find((info: ArticleInfo) => info.fieldId === 'thumbnail');
 
     const imageUrl = youtubeInfo?.youtubeID
       ? `https://img.youtube.com/vi/${youtubeInfo.youtubeID}/hqdefault.jpg`
@@ -94,7 +105,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         <div dangerouslySetInnerHTML={{ __html: article.intro }} />
         <p>
           カテゴリー:
-          {article.categories.map((category, index) => (
+          {article.categories.map((category: Category, index: number) => (
             <span key={category.id}>
               <Link href={`/articles/categories/${category.categories.toLowerCase()}`}>
                 {category.categories}

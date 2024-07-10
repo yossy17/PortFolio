@@ -33,22 +33,37 @@ const client = createClient({
 
 // 記事一覧を取得する関数
 export const getArticleList = async (queries?: MicroCMSQueries) => {
-  return client.getList<Article>({ endpoint: 'article', queries });
+  try {
+    return await client.getList<Article>({ endpoint: 'article', queries });
+  } catch (error) {
+    console.error('Error fetching article list:', error);
+    throw error;
+  }
 };
 
 // 記事詳細を取得する関数
 export const getArticleDetail = async (contentId: string, queries?: MicroCMSQueries) => {
-  return client.getListDetail<Article>({ endpoint: 'article', contentId, queries });
+  try {
+    return await client.getListDetail<Article>({ endpoint: 'article', contentId, queries });
+  } catch (error) {
+    console.error('Error fetching article page:', error);
+    throw error;
+  }
 };
 
 // カテゴリー一覧を取得する関数
 export const getCategoryList = async (queries?: MicroCMSQueries) => {
-  return client.getList<Category>({ endpoint: 'categories', queries });
+  try {
+    return await client.getList<Category>({ endpoint: 'categories', queries });
+  } catch (error) {
+    console.error('Error fetching category list:', error);
+    throw error;
+  }
 };
 
 // カテゴリーに属する記事を取得する関数
 export const getArticlesByCategory = async (categoryId: string, queries?: MicroCMSQueries) => {
-  return client.getList<Article>({
+  return await client.getList<Article>({
     endpoint: 'article',
     queries: {
       ...queries,
